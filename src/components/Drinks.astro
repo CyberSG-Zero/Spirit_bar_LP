@@ -1,0 +1,79 @@
+---
+import PotionSlider from '../components/DrinkSlider.jsx';
+
+const drinks = [
+  { name: 'Soul Bomb', image: '/src/assets/drink1.png', active: true },
+  { name: 'Corazón Rojo', image: '/src/assets/drink2.png' },
+  { name: 'Bebida Naranja', image: '/src/assets/drink3.png' },
+  { name: 'Bebida Verde', image: '/src/assets/drink4.png' },
+  { name: 'Bebida especial', image: '/src/assets/drink5.png' },
+  { name: 'Bebido Azul', image: '/src/assets/drink6.png' }
+];
+---
+<section id="drinks" class="bg-terceary py-32 overflow-hidden">
+  <PotionSlider client:load />
+  <div class="container mx-auto px-8">
+    <h2 class="font-gobernador text-[96px] text-primary text-center mb-12">
+      Drinks
+    </h2>
+
+    <div class="flex gap-12">
+      <!-- Drinks List -->
+      <div class="w-1/4">
+        <div class="space-y-4">
+          {drinks.map(drink => (
+            <div class="flex items-center gap-2">
+              <div 
+                class={`w-[58px] h-[71px] bg-cover bg-center ${drink.active ? 'bg-primary' : ''}`}
+                style={`background-image: url('${drink.image}');`}
+              ></div>
+              <span class="font-gobernador text-xl text-white">
+                {drink.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Featured Drink -->
+      <div class="flex-1">
+        <div class="flex gap-12">
+          <div class="w-[361px] h-[361px] bg-cover bg-center" style="background-image: url('/src/assets/soul-bomb-large.png');">
+          </div>
+
+          <div class="flex-1">
+            <div class="font-poppins italic text-primary text-sm mb-2">[ Underworld v.2 ]</div>
+            <h3 class="font-gobernador text-[64px] text-white mb-4">Soul Bomb</h3>
+            
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-[18px] h-6 bg-white"></div>
+              <div class="px-2 py-1 bg-white">
+                <span class="font-poppins font-bold text-2xl text-[#110f0f]">
+                  Grado de alcohol 10%
+                </span>
+              </div>
+            </div>
+
+            <p class="font-poppins text-sm text-white">
+              Bebida mística que captura la esencia del inframundo. Con un vibrante color rosado profundo, esta mezcla única combina 
+              <span class="font-bold text-primary">sabores exóticos que despiertan los sentidos.</span> 
+              Ideal para los espíritus que buscan un toque de aventura, Soul Bomb promete un 
+              <span class="font-bold text-primary">viaje sensorial que trasciende la realidad</span>, 
+              haciendo que cada sorbo sea un paso más hacia el más allá.
+            </p>
+
+            <div class="flex items-center gap-4 mt-4">
+              {['/src/assets/ingredient1.png', '/src/assets/ingredient2.png', '/src/assets/ingredient3.png'].map((ingredient, i) => (
+                <>
+                  <div class="w-[117px] h-[117px] bg-contain bg-center bg-no-repeat" style={`background-image: url('${ingredient}');`}>
+                  </div>
+                  {i < 2 && <span class="font-gobernador text-[64px] text-primary">+</span>}
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

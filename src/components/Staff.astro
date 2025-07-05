@@ -1,0 +1,35 @@
+---
+const staffMembers = [
+  { role: 'Game DESIGNER', name: 'Diego Aliaga' },
+  { role: 'Creative director', name: 'Melanie Pinto' },
+  { role: '2D ilustrator', name: 'Erika Kong' },
+  { role: 'Game Programmer', name: 'Sebastián Bañón' },
+  { role: 'Game Programmer / game designer', name: 'Max Torres' },
+  { role: 'Audio Manager', name: 'Sebastian Bautista' },
+  { role: '3d Artist', name: 'Eddi Velásquez' },
+  { role: 'UX/UI DESIGN', name: 'Luis Salas' },
+  { role: 'Game Programmer', name: 'Josue Leite' },
+  { role: 'Narrative', name: 'Favio Samillan' }
+];
+---
+
+<section class="w-full bg-terceary py-12 flex items-center justify-center">
+  <div class="max-w-[1440px] flex flex-col mx-auto px-8 gap-[1rem] md:flex-row md:items-start md:justify-start">
+    <h2 class="font-[gobernador] text-[6rem] text-primary">Staff</h2>
+    
+    <figure class="flex flex-col gap-[1.5rem] md:flex-wrap md:flex-row">
+      {staffMembers.map(member => (
+        <div class="flex items-center gap-2">
+          <div class="bg-white">
+            <span class="font-poppins font-bold text-[0.875rem] text-terceary uppercase">
+              {member.role}
+            </span>
+          </div>
+          <span class="font-gobernador text-[1.5rem] text-white">
+            {member.name}
+          </span>
+        </div>
+      ))}
+    </figure>
+  </div>
+</section>
