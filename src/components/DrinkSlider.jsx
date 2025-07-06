@@ -26,10 +26,8 @@ const PotionSlider = () => {
       description: "Una poción carmesí que despierta los sentimientos más profundos. Elaborada con pétalos de rosa encantados y esencia de corazón puro, esta bebida mágica intensifica las emociones y crea conexiones místicas entre las almas.",
       mainImage: "./images/drinks/Trago rojo.avif", // Ruta a tu imagen principal
       ingredients: [
-        { name: "Fresa", image: "./images/ingredients/Mora.avif" },
-        { name: "Polvo mágico", image: "./images/ingredients/Mora.avif" },
-        { name: "Huevo", image: "./images/ingredients/Mora.avif" },
-        { name: "Rana", image: "./images/ingredients/Mora.avif" }
+        { name: "Mora", image: "./images/ingredients/Mora.avif" },
+        { name: "Zumo de alma", image: "./images/ingredients/Zumo de alma.avif" }
       ],
     },
     {
@@ -40,10 +38,8 @@ const PotionSlider = () => {
       description: "El elixir de los campeones, forjado con polvo de estrella dorado y esencia de triunfo. Esta poción brillante otorga confianza sobrenatural y la fuerza necesaria para conquistar cualquier desafío que se presente.",
       mainImage: "./images/drinks/Trago naranja.avif", // Ruta a tu imagen principal
       ingredients: [
-        { name: "Fresa", image: "./images/ingredients/Mora.avif" },
-        { name: "Polvo mágico", image: "./images/ingredients/Mora.avif" },
-        { name: "Huevo", image: "./images/ingredients/Mora.avif" },
-        { name: "Rana", image: "./images/ingredients/Mora.avif" }
+        { name: "Pitahaya", image: "./images/ingredients/Pitahaya.avif" },
+        { name: "Prisma", image: "./images/ingredients/Prisma.avif" }
       ],
     },
     {
@@ -54,10 +50,8 @@ const PotionSlider = () => {
       description: "Una mezcla verde esmeralda que conecta con la sabiduría ancestral del bosque. Preparada con hierbas místicas y rocío de luna llena, esta poción otorga claridad mental y armonía con la naturaleza.",
       mainImage: "./images/drinks/Trago verde.avif", // Ruta a tu imagen principal
       ingredients: [
-        { name: "Fresa", image: "./images/ingredients/Mora.avif" },
-        { name: "Polvo mágico", image: "./images/ingredients/Mora.avif" },
-        { name: "Huevo", image: "./images/ingredients/Mora.avif" },
-        { name: "Rana", image: "./images/ingredients/Mora.avif" }
+        { name: "Pitahaya", image: "./images/ingredients/Pitahaya.avif" },
+        { name: "Zumo de alma", image: "./images/ingredients/Zumo de alma.avif" }
       ],
     },
     {
@@ -68,10 +62,9 @@ const PotionSlider = () => {
       description: "La poción más misteriosa de nuestra colección, de color púrpura profundo como el vacío cósmico. Esta bebida trascendental abre portales a dimensiones desconocidas y revela secretos del universo.",
       mainImage: "./images/drinks/Bebida especial 1.avif", // Ruta a tu imagen principal
       ingredients: [
-        { name: "Fresa", image: "./images/drinks/Bebida especial 2.avif" },
-        { name: "Polvo mágico", image: "./images/ingredients/Mora.avif" },
-        { name: "Huevo", image: "./images/ingredients/Mora.avif" },
-        { name: "Rana", image: "./images/ingredients/Mora.avif" }
+        { name: "Mora", image: "./images/ingredients/Mora.avif" },
+        { name: "Pitahaya", image: "./images/ingredients/Pitahaya.avif" },
+        { name: "Prisma", image: "./images/ingredients/Prisma.avif" }
       ],
     },
     {
@@ -82,10 +75,8 @@ const PotionSlider = () => {
       description: "Un elixir cristalino que pulsa con energía pura. Destilado a partir de cristales de cuarzo lunar y agua de manantial sagrado, esta poción restaura el equilibrio espiritual y purifica el aura.",
       mainImage: "./images/drinks/Trago azul.avif", // Ruta a tu imagen principal
       ingredients: [
-        { name: "Fresa", image: "./images/ingredients/Mora.avif" },
-        { name: "Polvo mágico", image: "./images/ingredients/Mora.avif" },
-        { name: "Huevo", image: "./images/ingredients/Mora.avif" },
-        { name: "Rana", image: "./images/ingredients/Mora.avif" }
+        { name: "Mora", image: "./images/ingredients/Mora.avif" },
+        { name: "Prisma", image: "./images/ingredients/Prisma.avif" }
       ],
     }
   ];
@@ -139,7 +130,7 @@ const PotionSlider = () => {
 
         <div className="w-full flex flex-col-reverse gap-8 items-center md:flex-row md:justify-center">
           {/* Left Sidebar - Bullet Navigation */}
-          <div className="flex flex-wrap gap-4 md:flex-col w-[fit-content]">
+          <div className="flex flex-wrap gap-4 md:flex-col md:w-[30%]">
             {bulletImages.map((bullet, index) => (
               <button
                 key={index}
