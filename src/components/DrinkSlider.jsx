@@ -13,11 +13,10 @@ const PotionSlider = () => {
       description: "Bebida mística que captura la esencia del Inframundo. Con un vibrante color rosado profundo, esta mezcla única combina sabores intensos con un toque sobrenatural. Ideal para los espíritus que buscan un toque de aventura. Su efecto permite un viaje sensorial extraordinario que hará que hasta cada sorbo sea un paso más hacia la más allá.",
       mainImage: "./images/drinks/Bebida especial 2.png", // Ruta a tu imagen principal
       ingredients: [
-        { name: "Fresa", image: "./images/ingredients/Mora.avif" },
-        { name: "Polvo mágico", image: "./images/ingredients/Mora.avif" },
-        { name: "Huevo", image: "./images/ingredients/Mora.avif" }
+        { name: "Mora", image: "./images/ingredients/Mora.avif" },
+        { name: "Pitahaya", image: "./images/ingredients/Pitahaya.avif" },
+        { name: "Zumo de alma", image: "./images/ingredients/Zumo de alma.avif" }
       ],
-      bgColor: "#1C1B1B"
     },
     {
       id: 1,
@@ -32,7 +31,6 @@ const PotionSlider = () => {
         { name: "Huevo", image: "./images/ingredients/Mora.avif" },
         { name: "Rana", image: "./images/ingredients/Mora.avif" }
       ],
-      bgColor: "from-red-900 via-pink-900 to-rose-900"
     },
     {
       id: 2,
@@ -47,7 +45,6 @@ const PotionSlider = () => {
         { name: "Huevo", image: "./images/ingredients/Mora.avif" },
         { name: "Rana", image: "./images/ingredients/Mora.avif" }
       ],
-      bgColor: "from-yellow-900 via-orange-900 to-amber-900"
     },
     {
       id: 3,
@@ -62,7 +59,6 @@ const PotionSlider = () => {
         { name: "Huevo", image: "./images/ingredients/Mora.avif" },
         { name: "Rana", image: "./images/ingredients/Mora.avif" }
       ],
-      bgColor: "from-green-900 via-emerald-900 to-teal-900"
     },
     {
       id: 4,
@@ -77,7 +73,6 @@ const PotionSlider = () => {
         { name: "Huevo", image: "./images/ingredients/Mora.avif" },
         { name: "Rana", image: "./images/ingredients/Mora.avif" }
       ],
-      bgColor: "from-purple-900 via-violet-900 to-indigo-900"
     },
     {
       id: 5,
@@ -92,18 +87,17 @@ const PotionSlider = () => {
         { name: "Huevo", image: "./images/ingredients/Mora.avif" },
         { name: "Rana", image: "./images/ingredients/Mora.avif" }
       ],
-      bgColor: "from-blue-900 via-cyan-900 to-slate-900"
     }
   ];
 
   // Imágenes para los bullets de navegación
   const bulletImages = [
-    { image: "./images/drinks/Bebida especial 2.avif", color: "from-pink-500 to-purple-500" },
-    { image: "/images/drinks/Trago rojo.avif", color: "from-red-500 to-pink-500" },
-    { image: "./images/drinks/Trago naranja.avif", color: "from-yellow-500 to-orange-500" },
-    { image: "./images/drinks/Trago verde.avif", color: "from-green-500 to-emerald-500" },
-    { image: "./images/drinks/Bebida especial 1.avif", color: "from-purple-500 to-violet-500" },
-    { image: "./images/drinks/Trago azul.avif", color: "from-blue-500 to-cyan-500" }
+    { image: "./images/drinks/Bebida especial 2.avif", color: "from-pink-500 to-purple-500", name: "Soul Bomb" },
+    { image: "/images/drinks/Trago rojo.avif", color: "from-red-500 to-pink-500", name: "Corazón Rojo" },
+    { image: "./images/drinks/Trago naranja.avif", color: "from-yellow-500 to-orange-500", name: "Bebida Naranja" },
+    { image: "./images/drinks/Trago verde.avif", color: "from-green-500 to-emerald-500", name: "Bebida Verde" },
+    { image: "./images/drinks/Bebida especial 1.avif", color: "from-purple-500 to-violet-500", name: "Bebida Especial" },
+    { image: "./images/drinks/Trago azul.avif", color: "from-blue-500 to-cyan-500", name: "Bebida Azul" }
   ];
 
   const nextSlide = () => {
@@ -145,36 +139,36 @@ const PotionSlider = () => {
 
         <div className="w-full flex flex-col-reverse gap-8 items-center md:flex-row md:justify-center">
           {/* Left Sidebar - Bullet Navigation */}
-          <div className="flex flex-wrap gap-4 md:flex-col">
+          <div className="flex flex-wrap gap-4 md:flex-col w-[fit-content]">
             {bulletImages.map((bullet, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`relative flex w-18 h-18 rounded-xl transition-all duration-300 transform hover:scale-110 md:w-auto ${
+                className={`relative w-18 h-18 transition-all duration-350 transform md:w-[fit-content] md:px-[0.5rem] flex items-center justify-center overflow-hidden ${
                   currentSlide === index 
-                    ? 'ring-4 ring-white shadow-lg scale-110' 
-                    : 'hover:ring-2 hover:ring-gray-300 opacity-70'
-                } bg-gradient-to-br ${bullet.color} flex items-center justify-center overflow-hidden`}
+                    ? `[&_p]:bg-primary [&_img]:bg-primary scale-105` 
+                    : '[&_p]:bg-black/50 [&_img]:bg-black/50'
+                }`}
               >
-                <div className='flex items-center'>
+                <div className='flex items-center w-[auto] transition-all duration-300'>
                   <img 
                     src={bullet.image} 
                     alt={`Potion ${index + 1}`}
-                    className="w-10 h-10 object-cover rounded-lg"
+                    className="w-10 h-10 object-cover md:w-auto md:h-auto border-2 border-terceary"
                     onError={(e) => {
                       // Fallback en caso de que la imagen no cargue
                       e.target.style.display = 'none';
                       e.target.nextSibling.style.display = 'block';
                     }}
                   />
-                  <p className='hidden md:block'>
-                    hola
+                  <p className='hidden md:block font-[gobernador] text-[1.5rem]/[0.8em]'>
+                    {bullet.name}
                   </p>
                 </div>
-                <div className="hidden text-xl">🧪</div>
+                {/* <div className="hidden text-xl">🧪</div>
                 {currentSlide === index && (
-                  <div className="absolute -inset-1 bg-gradient-to-r from-white/20 to-transparent rounded-xl animate-pulse"></div>
-                )}
+                  <div className="absolute -inset-1"></div>
+                )} */}
               </button>
             ))}
           </div>
@@ -183,11 +177,11 @@ const PotionSlider = () => {
           <div className="w-full flex flex-col gap-[1.5rem] items-center md:flex-row">
             {/* Potion Display */}
             <div className="relative md:w-[50%] flex justify-end">
-              <div className="max-w-[30rem] max-h-[30rem] bg-gradient-to-br from-white/10 to-white/5 rounded-3xl flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-2xl overflow-hidden md:w-full">
+              <div className="max-w-[30rem] max-h-[30rem] flex items-center justify-center overflow-hidden md:w-full">
                 <img 
                   src={currentSlideData.mainImage} 
                   alt={currentSlideData.name}
-                  className="w-32 h-32 object-cover rounded-2xl md:h-full md:w-full aspect-square md:object-contain"
+                  className="w-32 h-32 object-cover md:h-full md:w-full aspect-square md:object-contain"
                   // onError={(e) => {
                   //   // Fallback en caso de que la imagen no cargue
                   //   e.target.style.display = 'none';
@@ -195,7 +189,7 @@ const PotionSlider = () => {
                   // }}
                 />
                 {/* <div className="hidden text-8xl">🧪</div> */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-3xl"></div>
+                {/* <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-3xl"></div> */}
               </div>
               
               {/* Floating particles effect */}
