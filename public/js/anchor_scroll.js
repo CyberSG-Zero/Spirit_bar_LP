@@ -1,6 +1,6 @@
-//💙 MEMBERSCRIPT #138 v0.2 💙 - ANCHOR LINK SCROLL OFFSET OPTIMIZED
+//💙 ANCHOR LINK SCROLL OFFSET OPTIMIZED PARA LENIS v1.0 💙
 
-// Disable Webflow's built-in smooth scrolling
+// Disable Webflow's built-in smooth scrolling (si usas Webflow)
 var Webflow = Webflow || [];
 Webflow.push(function() {
   $(function() {
@@ -8,22 +8,12 @@ Webflow.push(function() {
   });
 });
 
-// Optimized smooth scroll implementation
+// Implementación optimizada con Lenis
 (function() {
-  // Configuración más rápida y responsiva
+  // Configuración
   const SCROLL_SETTINGS = {
-    duration: 1000, // Reducido de 1000ms a 600ms
-    easing: 'easeOutCubic' // Más natural que easeInOutCubic
-  };
-
-  const EASING_FUNCTIONS = {
-    linear: t => t,
-    easeInQuad: t => t * t,
-    easeOutQuad: t => t * (2 - t),
-    easeInOutQuad: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
-    easeInCubic: t => t * t * t,
-    easeOutCubic: t => (--t) * t * t + 1,
-    easeInOutCubic: t => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+    duration: 1.2, // Duración en segundos para Lenis
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) // Easing suave
   };
 
   // Cache del offset para evitar recálculos constantes
@@ -51,34 +41,31 @@ Webflow.push(function() {
     cachedOffset = null;
   }
 
-  function smoothScroll(target) {
-    const startPosition = window.pageYOffset;
-    const offset = getOffset();
-    const targetPosition = target.getBoundingClientRect().top + startPosition - offset;
-    const distance = targetPosition - startPosition;
-    
-    // Si la distancia es muy pequeña, no animar
-    if (Math.abs(distance) < 10) {
-      window.scrollTo(0, targetPosition);
-      return;
-    }
-
-    let startTime = null;
-
-    function animation(currentTime) {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const progress = Math.min(timeElapsed / SCROLL_SETTINGS.duration, 1);
-      const easeProgress = EASING_FUNCTIONS[SCROLL_SETTINGS.easing](progress);
-      
-      window.scrollTo(0, startPosition + distance * easeProgress);
-      
-      if (timeElapsed < SCROLL_SETTINGS.duration) {
-        requestAnimationFrame(animation);
+  // Función para esperar a que Lenis esté disponible
+  function waitForLenis() {
+    return new Promise((resolve) => {
+      if (window.lenis) {
+        resolve(window.lenis);
+      } else {
+        setTimeout(() => waitForLenis().then(resolve), 50);
       }
-    }
+    });
+  }
 
-    requestAnimationFrame(animation);
+  async function smoothScrollWithLenis(target) {
+    const lenis = await waitForLenis();
+    const offset = getOffset();
+    
+    // Usar Lenis para el scroll suave
+    lenis.scrollTo(target, {
+      duration: SCROLL_SETTINGS.duration,
+      easing: SCROLL_SETTINGS.easing,
+      offset: -offset, // Aplicar el offset del navbar
+      onComplete: () => {
+        // Asegurar que Lenis se mantenga sincronizado
+        lenis.resize();
+      }
+    });
   }
 
   function handleClick(e) {
@@ -88,19 +75,25 @@ Webflow.push(function() {
       const targetId = href.slice(1);
       const target = document.getElementById(targetId);
       if (target) {
-        // Scroll inmediato sin setTimeout
-        smoothScroll(target);
+        // Scroll con Lenis
+        smoothScrollWithLenis(target);
+        
+        // Actualizar URL después del scroll
+        setTimeout(() => {
+          history.pushState(null, null, `#${targetId}`);
+        }, 100);
       }
     }
   }
 
-  function handleHashChange() {
+  async function handleHashChange() {
     if (window.location.hash) {
       const targetId = window.location.hash.slice(1);
       const target = document.getElementById(targetId);
       if (target) {
-        // Pequeño delay solo para hashchange para permitir que el DOM se actualice
-        requestAnimationFrame(() => smoothScroll(target));
+        // Pequeño delay para permitir que el DOM se actualice
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        smoothScrollWithLenis(target);
       }
     }
   }
@@ -108,6 +101,8 @@ Webflow.push(function() {
   function init() {
     // Configurar event listeners
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      // Remover listeners anteriores para evitar duplicados
+      anchor.removeEventListener('click', handleClick);
       anchor.addEventListener('click', handleClick);
     });
     
@@ -116,6 +111,21 @@ Webflow.push(function() {
     
     // Manejar hash inicial
     handleHashChange();
+    
+    // Re-inicializar cuando se añadan nuevos elementos (útil para contenido dinámico)
+    const observer = new MutationObserver(() => {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        if (!anchor.hasAttribute('data-lenis-handled')) {
+          anchor.setAttribute('data-lenis-handled', 'true');
+          anchor.addEventListener('click', handleClick);
+        }
+      });
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
   }
 
   // Inicialización para Astro
@@ -129,4 +139,12 @@ Webflow.push(function() {
   if (typeof window.Webflow !== 'undefined') {
     window.Webflow.push(init);
   }
+
+  // Función global para uso manual si es necesario
+  window.scrollToSection = function(sectionId) {
+    const target = document.getElementById(sectionId);
+    if (target) {
+      smoothScrollWithLenis(target);
+    }
+  };
 })();
