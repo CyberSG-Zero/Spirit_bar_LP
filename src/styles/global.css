@@ -129,7 +129,6 @@ header:has(.hamburger-icon input[type="checkbox"]:checked) .pages {
         text-align: center;
         list-style: none;
         text-decoration: none;
-        color: white;
     }
 }
 
