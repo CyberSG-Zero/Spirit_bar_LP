@@ -1,15 +1,56 @@
   <script>
     import Lenis from 'lenis';
 
+    const lenis = new Lenis({
+      lerp: 0.1,
+      wheelMultiplier: 0.7,
+      gestureOrientation: "vertical",
+      normalizeWheel: false,
+      smoothTouch: false,
+      syncTouch: true,
+      touchInertiaMultiplier: 35,
+    });
 
-    // Initialize Lenis
-    const lenis = new Lenis();
+    // Hacer lenis accesible globalmente para el script de anchor links
+    window.lenis = lenis;
 
-    // Use requestAnimationFrame to continuously update the scroll
     function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
+      lenis.raf(time);
+      requestAnimationFrame(raf);
     }
 
     requestAnimationFrame(raf);
+
+    // Función para resetear Lenis cuando sea necesario
+    function resetLenis() {
+      lenis.resize();
+      lenis.start();
+    }
+
+    // Eventos para mantener Lenis sincronizado
+    window.addEventListener('resize', resetLenis);
+    window.addEventListener('orientationchange', resetLenis);
+
+    // Después de cargar imágenes (pueden cambiar el alto de la página)
+    window.addEventListener('load', () => {
+      setTimeout(resetLenis, 300);
+    });
+
+    // Prevenir conflictos con navegación por hash
+    window.addEventListener('hashchange', (e) => {
+      // Prevenir que el hashchange cause scroll nativo
+      e.preventDefault();
+      // El script de anchor links se encargará del scroll
+    });
+
+    // Funciones de control para botones de Lenis (si las necesitas)
+    window.lenisStart = () => lenis.start();
+    window.lenisStop = () => lenis.stop();
+    window.lenisToggle = () => {
+      if (lenis.isScrolling) {
+        lenis.stop();
+      } else {
+        lenis.start();
+      }
+    };
   </script>
