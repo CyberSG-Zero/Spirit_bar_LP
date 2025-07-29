@@ -106,7 +106,7 @@ const PotionSlider = () => {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <section className="w-full flex mx-auto justify-center items-center bg-[#1C1B1B] text-white overflow-hidden shadow-2xl py-[4rem]">
+    <section id='drinks' className="w-full flex mx-auto justify-center items-center bg-[#1C1B1B] text-white overflow-hidden shadow-2xl py-[4rem]">
       <div className=" w-full flex-col justify-center items-center max-w-[1440px] transition-all duration-500 px-[0.875rem] md:px-[4rem]">
         <div>
           <h2 className='font-[gobernador] text-[4.5rem] text-center text-primary'>Drinks</h2>
